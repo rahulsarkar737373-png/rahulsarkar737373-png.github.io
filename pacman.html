@@ -10,7 +10,7 @@ text-align:center;
 font-family:Arial;
 }
 canvas{
-background:#111;
+background:#000;
 margin-top:20px;
 border:2px solid white;
 }
@@ -23,8 +23,9 @@ font-size:18px;
 </head>
 <body>
 
-<h1>Pacman Game</h1>
-<p>Use Arrow Keys or Buttons</p>
+<h1>Pacman</h1>
+<p>Eat dots and avoid the ghost!</p>
+<p>Score: <span id="score">0</span></p>
 
 <canvas id="game" width="400" height="400"></canvas>
 
@@ -43,23 +44,25 @@ font-size:18px;
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-let pacman = {x:200, y:200, dx:0, dy:0};
-let food = [];
+let score = 0;
 
-for(let i=0;i<20;i++){
-food.push({
-x: Math.random()*380,
-y: Math.random()*380
-});
+let pacman = {x:20, y:20, dx:0, dy:0};
+let ghost = {x:360, y:360};
+
+let dots = [];
+for(let i=20;i<380;i+=40){
+for(let j=20;j<380;j+=40){
+dots.push({x:i,y:j});
+}
 }
 
 function draw(){
 ctx.clearRect(0,0,400,400);
 
-// draw food
+// draw dots
 ctx.fillStyle="white";
-food.forEach(f=>{
-ctx.fillRect(f.x,f.y,5,5);
+dots.forEach(d=>{
+ctx.fillRect(d.x,d.y,5,5);
 });
 
 // draw pacman
@@ -69,22 +72,46 @@ ctx.lineTo(pacman.x,pacman.y);
 ctx.fillStyle="yellow";
 ctx.fill();
 
+// draw ghost
+ctx.fillStyle="red";
+ctx.fillRect(ghost.x-10,ghost.y-10,20,20);
+
+// move pacman
 pacman.x += pacman.dx;
 pacman.y += pacman.dy;
 
-// eat food
-food = food.filter(f=>{
-return Math.hypot(pacman.x-f.x, pacman.y-f.y) > 15;
+// ghost chasing pacman
+if(ghost.x < pacman.x) ghost.x += 1;
+if(ghost.x > pacman.x) ghost.x -= 1;
+if(ghost.y < pacman.y) ghost.y += 1;
+if(ghost.y > pacman.y) ghost.y -= 1;
+
+// eat dots
+dots = dots.filter(d=>{
+let dist = Math.hypot(pacman.x-d.x, pacman.y-d.y);
+if(dist < 15){
+score++;
+document.getElementById("score").innerText = score;
+return false;
+}
+return true;
 });
+
+// ghost catch
+let gdist = Math.hypot(pacman.x-ghost.x, pacman.y-ghost.y);
+if(gdist < 20){
+alert("Game Over! Score: "+score);
+location.reload();
+}
 }
 
-setInterval(draw,50);
+setInterval(draw,30);
 
 function move(dir){
-if(dir=="up"){pacman.dx=0; pacman.dy=-3;}
-if(dir=="down"){pacman.dx=0; pacman.dy=3;}
-if(dir=="left"){pacman.dx=-3; pacman.dy=0;}
-if(dir=="right"){pacman.dx=3; pacman.dy=0;}
+if(dir=="up"){pacman.dx=0; pacman.dy=-2;}
+if(dir=="down"){pacman.dx=0; pacman.dy=2;}
+if(dir=="left"){pacman.dx=-2; pacman.dy=0;}
+if(dir=="right"){pacman.dx=2; pacman.dy=0;}
 }
 
 document.addEventListener("keydown", function(e){
