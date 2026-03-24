@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Games Hub</title>
+    <title>Games Menu</title>
     <style>
         body {
             background: #0f172a;
             color: white;
             font-family: Arial;
             text-align: center;
-            margin: 0;
-        }
-
-        h1 {
-            margin-top: 30px;
         }
 
         .game {
             background: #1e293b;
             padding: 20px;
             margin: 20px auto;
-            width: 300px;
+            width: 250px;
             border-radius: 10px;
         }
 
@@ -29,7 +24,6 @@
             border: none;
             color: white;
             border-radius: 5px;
-            cursor: pointer;
         }
 
         a {
@@ -40,58 +34,25 @@
 </head>
 <body>
 
-<h1>Games Hub 🎮</h1>
+<h1>Choose a Game 🎮</h1>
 
 <div class="game">
     <h2>Number Guess</h2>
-    <button onclick="guessGame()">Play</button>
+    <a href="guess.html"><button>Play</button></a>
 </div>
 
 <div class="game">
-    <h2>Click Speed Test</h2>
-    <button onclick="clickGame()">Start</button>
-    <p id="clicks"></p>
+    <h2>Dice Roll</h2>
+    <a href="dice.html"><button>Play</button></a>
 </div>
 
 <div class="game">
     <h2>Coin Toss</h2>
-    <button onclick="coin()">Flip Coin</button>
+    <a href="coin.html"><button>Play</button></a>
 </div>
 
 <br>
 <a href="index.html">Back Home</a>
-
-<script>
-function guessGame() {
-    let number = Math.floor(Math.random() * 10) + 1;
-    let guess = prompt("Guess number 1-10");
-    if (guess == number) alert("You Win!");
-    else alert("You Lose! Number was " + number);
-}
-
-let count = 0;
-function clickGame() {
-    count = 0;
-    document.getElementById("clicks").innerHTML = "Click button fast!";
-    let interval = setInterval(() => {
-        document.getElementById("clicks").innerHTML = "Clicks: " + count;
-    }, 100);
-
-    setTimeout(() => {
-        clearInterval(interval);
-        alert("Time up! You clicked " + count + " times");
-    }, 5000);
-}
-
-document.addEventListener("click", () => {
-    count++;
-});
-
-function coin() {
-    let result = Math.random() < 0.5 ? "Heads" : "Tails";
-    alert(result);
-}
-</script>
 
 </body>
 </html>
