@@ -84,3 +84,41 @@ type();
 
 </body>
 </html>
+<h1>Tic Tac Toe</h1>
+<div id="board"></div>
+
+<style>
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 5px;
+  justify-content: center;
+}
+.cell {
+  width: 100px;
+  height: 100px;
+  background: #222;
+  color: white;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+</style>
+
+<script>
+let turn = "X";
+
+for (let i = 0; i < 9; i++) {
+  let cell = document.createElement("div");
+  cell.className = "cell";
+  cell.onclick = function() {
+    if (cell.innerHTML == "") {
+      cell.innerHTML = turn;
+      turn = turn == "X" ? "O" : "X";
+    }
+  };
+  document.getElementById("board").appendChild(cell);
+}
+</script>
