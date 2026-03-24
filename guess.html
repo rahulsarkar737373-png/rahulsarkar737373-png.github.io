@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Number Guess Game</title>
+<style>
+body{
+background:#0f172a;
+color:white;
+text-align:center;
+font-family:Arial;
+}
+
+.gamebox{
+background:#1e293b;
+padding:30px;
+margin:50px auto;
+width:300px;
+border-radius:10px;
+}
+
+input{
+padding:10px;
+font-size:18px;
+width:100px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+background:#22c55e;
+border:none;
+color:white;
+border-radius:5px;
+margin-top:10px;
+}
+
+#result{
+font-size:20px;
+margin-top:15px;
+}
+
+#numberReveal{
+font-size:40px;
+margin-top:15px;
+}
+</style>
+</head>
+<body>
+
+<h1>Number Guess Game 🎯</h1>
+
+<div class="gamebox">
+<p>Guess number between 1 - 100</p>
+
+<input type="number" id="guess">
+<br>
+<button onclick="checkGuess()">Guess</button>
+
+<p id="result"></p>
+<p>Attempts: <span id="attempts">0</span></p>
+<div id="numberReveal"></div>
+
+<button onclick="restart()">Restart Game</button>
+</div>
+
+<br>
+<a href="games.html">Back</a>
+
+<script>
+let number = Math.floor(Math.random()*100)+1;
+let attempts = 0;
+
+function checkGuess(){
+let guess = document.getElementById("guess").value;
+attempts++;
+document.getElementById("attempts").innerText = attempts;
+
+if(guess == number){
+document.getElementById("result").innerText = "Correct!";
+animateNumber(number);
+}
+else if(guess > number){
+document.getElementById("result").innerText = "Too High!";
+}
+else{
+document.getElementById("result").innerText = "Too Low!";
+}
+}
+
+function animateNumber(num){
+let display = document.getElementById("numberReveal");
+let i = 0;
+
+let interval = setInterval(()=>{
+display.innerText = Math.floor(Math.random()*100);
+i++;
+if(i>15){
+clearInterval(interval);
+display.innerText = num;
+}
+},100);
+}
+
+function restart(){
+number = Math.floor(Math.random()*100)+1;
+attempts = 0;
+document.getElementById("attempts").innerText = 0;
+document.getElementById("result").innerText = "";
+document.getElementById("numberReveal").innerText = "";
+document.getElementById("guess").value = "";
+}
+</script>
+
+</body>
+</html>
