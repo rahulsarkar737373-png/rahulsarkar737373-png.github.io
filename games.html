@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Games</title>
+    <title>Games Hub</title>
     <style>
         body {
             background: #0f172a;
@@ -12,7 +12,7 @@
         }
 
         h1 {
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         .game {
@@ -23,42 +23,73 @@
             border-radius: 10px;
         }
 
-        a {
-            color: white;
-            text-decoration: none;
-        }
-
         button {
             padding: 10px 20px;
             background: #22c55e;
             border: none;
             color: white;
             border-radius: 5px;
+            cursor: pointer;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-<h1>Games Hub</h1>
+<h1>Games Hub 🎮</h1>
 
 <div class="game">
-    <h2>Number Guess Game</h2>
-    <button onclick="playGame()">Play</button>
+    <h2>Number Guess</h2>
+    <button onclick="guessGame()">Play</button>
+</div>
+
+<div class="game">
+    <h2>Click Speed Test</h2>
+    <button onclick="clickGame()">Start</button>
+    <p id="clicks"></p>
+</div>
+
+<div class="game">
+    <h2>Coin Toss</h2>
+    <button onclick="coin()">Flip Coin</button>
 </div>
 
 <br>
 <a href="index.html">Back Home</a>
 
 <script>
-function playGame() {
+function guessGame() {
     let number = Math.floor(Math.random() * 10) + 1;
-    let guess = prompt("Guess a number between 1 and 10");
+    let guess = prompt("Guess number 1-10");
+    if (guess == number) alert("You Win!");
+    else alert("You Lose! Number was " + number);
+}
 
-    if (guess == number) {
-        alert("You Win!");
-    } else {
-        alert("You Lose! Number was " + number);
-    }
+let count = 0;
+function clickGame() {
+    count = 0;
+    document.getElementById("clicks").innerHTML = "Click button fast!";
+    let interval = setInterval(() => {
+        document.getElementById("clicks").innerHTML = "Clicks: " + count;
+    }, 100);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        alert("Time up! You clicked " + count + " times");
+    }, 5000);
+}
+
+document.addEventListener("click", () => {
+    count++;
+});
+
+function coin() {
+    let result = Math.random() < 0.5 ? "Heads" : "Tails";
+    alert(result);
 }
 </script>
 
