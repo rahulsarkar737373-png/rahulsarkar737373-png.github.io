@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rahul Hacker Site</title>
+  <img src="photo.jpg" width="150">  
+  <style>
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 20px;
+        }
 
+        #terminal {
+            border: 1px solid #00ff00;
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+            min-height: 300px;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        img {
+            width: 150px;
+            border-radius: 50%;
+            border: 2px solid #00ff00;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background: #00ff00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<img src="photo.jpg">
+
+<div id="terminal">
+    <span id="text"></span><span class="cursor"></span>
+</div>
+
+<script>
+const text = [
+"Initializing system...",
+"Accessing database...",
+"Bypassing firewall...",
+"Access granted.",
+"Welcome Rahul Sarkar",
+"Loading personal data...",
+"Gamer | Tech Lover | Future Developer",
+"Website under construction..."
+];
+
+let line = 0;
+let char = 0;
+let speed = 50;
+
+function type() {
+    if (line < text.length) {
+        if (char < text[line].length) {
+            document.getElementById("text").innerHTML += text[line].charAt(char);
+            char++;
+            setTimeout(type, speed);
+        } else {
+            document.getElementById("text").innerHTML += "<br>";
+            line++;
+            char = 0;
+            setTimeout(type, 500);
+        }
+    }
+}
+
+type();
+</script>
+
+</body>
+</html>
