@@ -1,1 +1,53 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meme Gallery</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            padding: 20px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 250px;
+            margin: 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Meme Gallery 😂</h1>
+<a href="index.html">Back to Home</a>
+
+<div class="gallery">
+    <img src="meme1.jpg">
+    <img src="meme2.jpg">
+    <img src="meme3.jpg">
+    <img src="meme4.jpg">
+</div>
+
+</body>
+</html>
