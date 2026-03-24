@@ -1,124 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rahul Hacker Site</title>
-  <img src="photo.jpg" width="150">  
-  <style>
+    <title>Rahul Hub</title>
+    <style>
         body {
-            background-color: black;
-            color: #00ff00;
-            font-family: monospace;
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+        }
+
+        nav {
+            background: #020617;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        #home {
+            height: 100vh;
+        }
+
+        .card {
+            background: #1e293b;
             padding: 20px;
-        }
-
-        #terminal {
-            border: 1px solid #00ff00;
-            padding: 20px;
-            width: 80%;
-            margin: auto;
-            min-height: 300px;
-            box-shadow: 0 0 20px #00ff00;
-        }
-
-        img {
-            width: 150px;
-            border-radius: 50%;
-            border: 2px solid #00ff00;
-            display: block;
-            margin: 20px auto;
-        }
-
-        .cursor {
+            margin: 20px;
             display: inline-block;
-            width: 10px;
-            background: #00ff00;
-            animation: blink 1s infinite;
+            width: 250px;
+            border-radius: 10px;
         }
 
-        @keyframes blink {
-            50% { background: transparent; }
+        button {
+            padding: 10px 20px;
+            background: #22c55e;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
 
-<img src="photo.jpg">
+<canvas id="fireworks"></canvas>
 
-<div id="terminal">
-    <span id="text"></span><span class="cursor"></span>
-</div>
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Hub</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<section id="home">
+    <h1>Welcome to Rahul Hub</h1>
+    <p>Games | Movies | Tools | Fun</p>
+    <button onclick="startFireworks()">Celebrate</button>
+</section>
+
+<section id="about">
+    <h1>About Me</h1>
+    <p>Hello, I'm Rahul. I like gaming, tech and building websites.</p>
+</section>
+
+<section id="projects">
+    <h1>My Hub</h1>
+
+    <div class="card">
+        <h2>Games</h2>
+        <a href="games.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h2>Movies</h2>
+        <a href="movies.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h2>Memes</h2>
+        <button>Open</button>
+    </div>
+
+</section>
+
+<section id="contact">
+    <h1>Contact</h1>
+    <p>Email: rahul@email.com</p>
+</section>
 
 <script>
-const text = [
-"Initializing system...",
-"Accessing database...",
-"Bypassing firewall...",
-"Access granted.",
-"Welcome Rahul Sarkar",
-"Loading personal data...",
-"Gamer | Tech Lover | Future Developer",
-"Website under construction..."
-];
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
 
-let line = 0;
-let char = 0;
-let speed = 50;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function type() {
-    if (line < text.length) {
-        if (char < text[line].length) {
-            document.getElementById("text").innerHTML += text[line].charAt(char);
-            char++;
-            setTimeout(type, speed);
-        } else {
-            document.getElementById("text").innerHTML += "<br>";
-            line++;
-            char = 0;
-            setTimeout(type, 500);
-        }
+let particles = [];
+
+function startFireworks() {
+    for (let i = 0; i < 100; i++) {
+        particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            vx: (Math.random() - 0.5) * 8,
+            vy: (Math.random() - 0.5) * 8,
+            life: 100
+        });
     }
 }
 
-type();
+function animate() {
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+        ctx.fillStyle = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+        ctx.fillRect(p.x, p.y, 4, 4);
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+
+        if (p.life <= 0) particles.splice(i, 1);
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
 </script>
 
 </body>
 </html>
-<h1>Tic Tac Toe</h1>
-<div id="board"></div>
-
-<style>
-#board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  gap: 5px;
-  justify-content: center;
-}
-.cell {
-  width: 100px;
-  height: 100px;
-  background: #222;
-  color: white;
-  font-size: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-</style>
-
-<script>
-let turn = "X";
-
-for (let i = 0; i < 9; i++) {
-  let cell = document.createElement("div");
-  cell.className = "cell";
-  cell.onclick = function() {
-    if (cell.innerHTML == "") {
-      cell.innerHTML = turn;
-      turn = turn == "X" ? "O" : "X";
-    }
-  };
-  document.getElementById("board").appendChild(cell);
-}
-</script>
